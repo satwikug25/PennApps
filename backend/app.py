@@ -91,6 +91,16 @@ def transfer_money(sender_id):
         return jsonify({"message": "Money transferred successfully", "data": response.json()}), 201
     else:
         return jsonify({"error": "Failed to create transaction", "details": response.json()}), response.status_code
-           
-           
+    
+@app.route('/get_accounts_by_customer_id/<customer_id>', methods=['GET'])
+def get_accounts_by_customer_id(customer_id):
+
+    url = f"{NESSIE_BASE_URL}/customers/{customer_id}/accounts?key={API_KEY}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        customers = response.json()
+        return jsonify(customers)
+    else:
+        return jsonify({'error': 'Failed to fetch customers'}), response.status_code
 
