@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 NESSIE_BASE_URL = "http://api.nessieisreal.com"
-API_KEY = "4a87e7db7399e0d55184195fd6d8f615"
+API_KEY = "09596467fbd10624fb1b890788dd3024"
 
 @app.route('/')
 def index():
