@@ -1,9 +1,9 @@
 from flask import Flask, jsonify, request
 import requests
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
