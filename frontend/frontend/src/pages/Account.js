@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { withAuthInfo, useLogoutFunction, useRedirectFunctions } from '@propelauth/react';
 import axios from 'axios';
 
-const Accounts = withAuthInfo((props) => {
+const Account = withAuthInfo((props) => {
   const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [transferAmount, setTransferAmount] = useState('');
   const [recipientAccount, setRecipientAccount] = useState('');
+  const [payeeId, setPayeeId] = useState('');
+  const [transactionDate, setTransactionDate] = useState('');
+  const [status, setStatus] = useState('');
+  const [description, setDescription] = useState('');
   const [showAccountForm, setShowAccountForm] = useState(false);
   const [newAccountNickname, setNewAccountNickname] = useState('');
   const [newAccountType, setNewAccountType] = useState('');
   const [newAccountNumber, setNewAccountNumber] = useState('');
-  const [newAccountBalance, setNewAccountBalance] = useState(null);  // New state for balance
-  const [newAccountRewards, setNewAccountRewards] = useState(null);  // New state for rewards
+  const [newAccountBalance, setNewAccountBalance] = useState(null);
+  const [newAccountRewards, setNewAccountRewards] = useState(null);
   const logoutFunction = useLogoutFunction();
   const { redirectToAccountPage } = useRedirectFunctions();
 
@@ -20,14 +24,16 @@ const Accounts = withAuthInfo((props) => {
     const fetchAccounts = async () => {
       try {
         const customerId = localStorage.getItem('customerId');
-        const response = await axios.get(`http://127.0.0.1:5000/customers/${customerId}/accounts`);
+        const response = await axios.get('http://127.0.0.1:5000/get_accounts_by_customer_id/'+ customerId );
+        
+        console.log(response)
         setAccounts(response.data);
       } catch (error) {
         console.error('Error fetching accounts:', error);
       }
     };
     fetchAccounts();
-  }, []);
+  }, [accounts]);
 
   const handleNewAccount = () => {
     setShowAccountForm(!showAccountForm); // Toggle the form visibility
@@ -39,11 +45,10 @@ const Accounts = withAuthInfo((props) => {
       const response = await axios.post(`http://127.0.0.1:5000/create_account/${customerId}`, {
         type: newAccountType,
         nickname: newAccountNickname,
-        rewards: parseInt(newAccountRewards), // Ensure integer value for rewards
-        balance: parseInt(newAccountBalance), // Ensure integer value for balance
+        rewards: parseInt(newAccountRewards),
+        balance: parseInt(newAccountBalance),
         account_number: newAccountNumber,
       });
-      console.log(response.data);
       alert('Account created successfully!');
       setAccounts([...accounts, response.data]);
       setShowAccountForm(false);
@@ -55,17 +60,18 @@ const Accounts = withAuthInfo((props) => {
 
   const handleTransfer = async (senderId) => {
     try {
-      const response = await axios.post(`http://127.0.0.1:5000/transfer_money/${senderId}`, {
+      const response = await axios.post(`http://127.0.0.1:5001/transfer-money/${senderId}`, {
         medium: 'balance',
-        payee_id: recipientAccount,
+        payee_id: payeeId,
         amount: transferAmount,
-        transaction_date: new Date().toISOString(),
-        description: 'Money transfer',
+        transaction_date: transactionDate,
+        status: 'Pending',
+        description,
       });
       alert('Transfer successful!');
     } catch (error) {
       console.error('Error making transfer:', error);
-      alert('Transfer failed');
+      alert('Transfer failed.');
     }
   };
 
@@ -84,9 +90,30 @@ const Accounts = withAuthInfo((props) => {
                   <h4>Transfer Money</h4>
                   <input
                     type="text"
-                    placeholder="Recipient Account ID"
-                    value={recipientAccount}
-                    onChange={(e) => setRecipientAccount(e.target.value)}
+                    placeholder="Payee ID"
+                    value={payeeId}
+                    onChange={(e) => setPayeeId(e.target.value)}
+                    style={styles.input}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Transaction Date"
+                    value={transactionDate}
+                    onChange={(e) => setTransactionDate(e.target.value)}
+                    style={styles.input}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Status"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    style={styles.input}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     style={styles.input}
                   />
                   <input
@@ -174,12 +201,15 @@ const styles = {
     color: '#333',
   },
   accountGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+    display: 'flex',
+    flexWrap: 'wrap',
     gap: '2rem',
+    justifyContent: 'space-between',
   },
   accountCard: {
     backgroundColor: '#fff',
+    width: '100%',
+    maxWidth: '400px',
     padding: '2rem',
     borderRadius: '15px',
     boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
@@ -230,13 +260,8 @@ const styles = {
     backgroundColor: 'transparent',
     color: '#666',
     border: '1px solid #666',
-    padding: '0.8rem 2rem',
-    fontSize: '1rem',
-    cursor: 'pointer',
-    borderRadius: '5px',
-    marginTop: '1rem',
-    transition: 'background-color 0.3s, color 0.3s',
-  },
-};
+    padding: '0.8rem'
+  }
+}
 
-export default Accounts;
+export default Account

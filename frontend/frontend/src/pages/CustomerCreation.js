@@ -40,7 +40,7 @@ const CustomerCreation = () => {
     
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/create_customer', { 
+      const response = await axios.post('http://127.0.0.1:5000/create-customer', { 
         first_name: firstName,
         last_name: lastName,
         address
