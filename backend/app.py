@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 NESSIE_BASE_URL = "http://api.nessieisreal.com"
-API_KEY = "09596467fbd10624fb1b890788dd3024"
+API_KEY = "4a87e7db7399e0d55184195fd6d8f615"
 
 @app.route('/')
 def index():
@@ -38,6 +38,7 @@ def get_accounts():
 def create_customer():
     # Extract customer data from the incoming POST request
     customer_data = request.json
+    # print(customer_data) 
 
     # API endpoint for creating a customer
     url = f"{NESSIE_BASE_URL}/customers?key={API_KEY}"
