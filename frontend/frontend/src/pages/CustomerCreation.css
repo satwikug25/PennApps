@@ -1,0 +1,28 @@
+.background {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .custom-card {
+    border-radius: 20px;
+    padding: 30px;
+  }
+  
+  .custom-button {
+    padding: 12px 24px;
+    font-size: 18px;
+    background: linear-gradient(to right, #00796b, #004d40);
+    transition: transform 0.3s ease;
+  }
+  
+  .custom-button:hover {
+    transform: scale(1.05);
+  }
+  
+  input {
+    font-size: 16px;
+  }
+  
