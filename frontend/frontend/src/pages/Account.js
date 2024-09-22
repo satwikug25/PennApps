@@ -60,13 +60,10 @@ const Account = withAuthInfo((props) => {
 
   const handleTransfer = async (senderId) => {
     try {
-      const response = await axios.post(`http://127.0.0.1:5001/transfer-money/${senderId}`, {
-        medium: 'balance',
-        payee_id: payeeId,
+      const response = await axios.post(`http://127.0.0.1:5001/transfer-money/`, {
+        senderId,
+        recipientAccountId: payeeId,
         amount: transferAmount,
-        transaction_date: transactionDate,
-        status: 'Pending',
-        description,
       });
       alert('Transfer successful!');
     } catch (error) {
