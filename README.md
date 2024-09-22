@@ -1,11 +1,12 @@
-# <img src="./images/pennapps-logo.png" width="47" height="47" alt="PennApps logo"/> PennApps XXV - BlockWire
+# <img src="./images/pennapps-logo.png" width="47" height="47" alt="PennApps logo" style="vertical-align: middle;" /> PennApps XXV - BlockWire
 
 ## Team Members:
  - **Chirag Seth**
  - **Hanson Siu**
- - **Sai Shiva Satwik Mallajosyula**
+ - **Satwik Mallajosyula**
  - **Vitthal Agarwal**
- - **Devpost**: [https://devpost.com/software/blockwire](https://devpost.com/software/blockwire)
+
+**Devpost**: [BlockWire on Devpost](https://devpost.com/software/blockwire)
 
 ## 📖 Overview
 BlockWire is a cutting-edge platform designed to revolutionize international wire transfers by significantly reducing transfer times and eliminating intermediary banks. By integrating Finance and Blockchain technologies, BlockWire leverages Capital One's Nessie mock API for realistic banking simulations, PropelAuth for secure user authentication, and Cerebras AI's LLaMa model for fast and advanced fraud detection. Approved transactions are securely recorded on the blockchain, ensuring both speed and security in financial operations.
@@ -30,7 +31,7 @@ BlockWire is a cutting-edge platform designed to revolutionize international wir
 ### **Blockchain**
 - ![Hedera](https://img.shields.io/badge/Hedera-2E2E2E?logo=hedera&logoColor=white&style=flat-square)
 
-## **Features**
+## 🌟 **Features**
  - **User Authentication:** Secure sign-up and login using PropelAuth.
  - **Bank Operations Simulation:** Realistic banking operations powered by Capital One's Nessie mock API.
  - **Fast International Wire Transfers:** Eliminate intermediary banks to reduce transfer times from 1-5 business days to within a few hours using blockchain technology.
@@ -38,7 +39,7 @@ BlockWire is a cutting-edge platform designed to revolutionize international wir
  - **Blockchain Integration:** Immutable and transparent recording of approved transactions on the blockchain.
  - **Secure Data Handling:** Ensures user data and transactions are protected with industry-standard security measures.
 
-## **Installation**
+## 🚀 **Installation**
  - TBD
 
 ## ❤️ **Acknowledgements**
