@@ -34,14 +34,18 @@ const CustomerCreation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const dat = {first_name: firstName,
-        last_name: lastName,
-        address }
+    // const dat = {first_name: firstName,
+    //     last_name: lastName,
+    //     address }
     
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/create_customer', { dat });
-      const customerId = response.data.objectCreated._id
+      const response = await axios.post('http://127.0.0.1:5000/create_customer', { 
+        first_name: firstName,
+        last_name: lastName,
+        address
+      });
+      const customerId = response.data._id
       localStorage.setItem('customerId', customerId);
         navigate("/account");
         setMessage('Customer created successfully!');
