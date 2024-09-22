@@ -45,7 +45,7 @@ const CustomerCreation = () => {
         last_name: lastName,
         address
       });
-      const customerId = response.data._id
+      const customerId = response.data.data.objectCreated._id
       localStorage.setItem('customerId', customerId);
         navigate("/account");
         setMessage('Customer created successfully!');

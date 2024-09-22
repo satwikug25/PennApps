@@ -4,9 +4,15 @@ import axios from 'axios';
 
 const Accounts = withAuthInfo((props) => {
   const [accounts, setAccounts] = useState([]);
-  const [selectedAccount, setSelectedAccount] = useState(null); // New state for selected account
+  const [selectedAccount, setSelectedAccount] = useState(null);
   const [transferAmount, setTransferAmount] = useState('');
   const [recipientAccount, setRecipientAccount] = useState('');
+  const [showAccountForm, setShowAccountForm] = useState(false);
+  const [newAccountNickname, setNewAccountNickname] = useState('');
+  const [newAccountType, setNewAccountType] = useState('');
+  const [newAccountNumber, setNewAccountNumber] = useState('');
+  const [newAccountBalance, setNewAccountBalance] = useState(0);  // New state for balance
+  const [newAccountRewards, setNewAccountRewards] = useState(0);  // New state for rewards
   const logoutFunction = useLogoutFunction();
   const { redirectToAccountPage } = useRedirectFunctions();
 
@@ -14,7 +20,7 @@ const Accounts = withAuthInfo((props) => {
     const fetchAccounts = async () => {
       try {
         const customerId = localStorage.getItem('customerId');
-        const response = await axios.get(`/customers/${customerId}/accounts`); // Replace with actual API call
+        const response = await axios.get(`http://127.0.0.1:5000/customers/${customerId}/accounts`);
         setAccounts(response.data);
       } catch (error) {
         console.error('Error fetching accounts:', error);
@@ -24,7 +30,26 @@ const Accounts = withAuthInfo((props) => {
   }, []);
 
   const handleNewAccount = () => {
-    redirectToAccountPage();
+    setShowAccountForm(!showAccountForm); // Toggle the form visibility
+  };
+
+  const handleAccountCreation = async () => {
+    const customerId = localStorage.getItem('customerId');
+    try {
+      const response = await axios.post(`http://127.0.0.1:5000/customers/${customerId}/accounts`, {
+        type: newAccountType,
+        nickname: newAccountNickname,
+        rewards: parseInt(newAccountRewards), // Ensure integer value for rewards
+        balance: parseInt(newAccountBalance), // Ensure integer value for balance
+        account_number: newAccountNumber,
+      });
+      alert('Account created successfully!');
+      setAccounts([...accounts, response.data]);
+      setShowAccountForm(false);
+    } catch (error) {
+      console.error('Error creating account:', error);
+      alert('Account creation failed.');
+    }
   };
 
   const handleTransfer = async (accountId) => {
@@ -34,7 +59,7 @@ const Accounts = withAuthInfo((props) => {
         payee_id: recipientAccount,
         amount: transferAmount,
         transaction_date: new Date().toISOString(),
-        description: 'Money transfer'
+        description: 'Money transfer',
       });
       alert('Transfer successful!');
     } catch (error) {
@@ -81,9 +106,57 @@ const Accounts = withAuthInfo((props) => {
       ) : (
         <p style={styles.noAccounts}>No accounts available.</p>
       )}
-      <button onClick={handleNewAccount} style={styles.createButton}>Create New Account</button>
+
+      <button onClick={handleNewAccount} style={styles.createButton}>
+        {showAccountForm ? 'Hide Create Account Form' : 'Create New Account'}
+      </button>
+
+      {showAccountForm && (
+        <div style={styles.accountForm}>
+          <h4>Create New Account</h4>
+          <input
+            type="text"
+            placeholder="Account Nickname"
+            value={newAccountNickname}
+            onChange={(e) => setNewAccountNickname(e.target.value)}
+            style={styles.input}
+          />
+          <input
+            type="text"
+            placeholder="Account Number"
+            value={newAccountNumber}
+            onChange={(e) => setNewAccountNumber(e.target.value)}
+            style={styles.input}
+          />
+          <select value={newAccountType} onChange={(e) => setNewAccountType(e.target.value)} style={styles.input}>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Checking">Checking</option>
+            <option value="Savings">Savings</option>
+          </select>
+          <input
+            type="number"
+            placeholder="Balance"
+            value={newAccountBalance}
+            onChange={(e) => setNewAccountBalance(e.target.value)}
+            style={styles.input}
+          />
+          <input
+            type="number"
+            placeholder="Rewards"
+            value={newAccountRewards}
+            onChange={(e) => setNewAccountRewards(e.target.value)}
+            style={styles.input}
+          />
+          <button onClick={handleAccountCreation} style={styles.createButton}>
+            Create Account
+          </button>
+        </div>
+      )}
+
       <br /><br />
-      <button onClick={async () => await logoutFunction(true)} style={styles.logoutButton}>Logout</button>
+      <button onClick={async () => await logoutFunction(true)} style={styles.logoutButton}>
+        Logout
+      </button>
     </section>
   );
 });
@@ -137,18 +210,7 @@ const styles = {
     borderRadius: '5px',
     transition: 'background-color 0.3s',
   },
-  logoutButton: {
-    backgroundColor: 'transparent',
-    color: '#666',
-    border: '1px solid #666',
-    padding: '0.8rem 2rem',
-    fontSize: '1rem',
-    cursor: 'pointer',
-    borderRadius: '5px',
-    marginTop: '1rem',
-    transition: 'background-color 0.3s, color 0.3s',
-  },
-  transferForm: {
+  accountForm: {
     marginTop: '1rem',
     padding: '1rem',
     backgroundColor: '#f9f9f9',
@@ -162,7 +224,18 @@ const styles = {
     borderRadius: '5px',
     border: '1px solid #ccc',
     fontSize: '1rem',
-  }
+  },
+  logoutButton: {
+    backgroundColor: 'transparent',
+    color: '#666',
+    border: '1px solid #666',
+    padding: '0.8rem 2rem',
+    fontSize: '1rem',
+    cursor: 'pointer',
+    borderRadius: '5px',
+    marginTop: '1rem',
+    transition: 'background-color 0.3s, color 0.3s',
+  },
 };
 
 export default Accounts;
