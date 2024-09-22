@@ -1,16 +1,34 @@
-# ![PennApps logo](/images/pennapps-logo.png) PennApps XXV - BlockWire
+# <img src="./images/pennapps-logo.png" width="47" height="47" alt="PennApps logo"/> PennApps XXV - BlockWire
 
 ## Team Members:
- - Chirag Seth
- - Hanson Siu
- - Sai Shiva Satwik Mallajosyula
- - Vitthal Agarwal
+ - **Chirag Seth**
+ - **Hanson Siu**
+ - **Sai Shiva Satwik Mallajosyula**
+ - **Vitthal Agarwal**
+ - **Devpost**: [https://devpost.com/software/blockwire](https://devpost.com/software/blockwire)
 
 ## 📖 Overview
 BlockWire is a cutting-edge platform designed to revolutionize international wire transfers by significantly reducing transfer times and eliminating intermediary banks. By integrating Finance and Blockchain technologies, BlockWire leverages Capital One's Nessie mock API for realistic banking simulations, PropelAuth for secure user authentication, and Cerebras AI's LLaMa model for fast and advanced fraud detection. Approved transactions are securely recorded on the blockchain, ensuring both speed and security in financial operations.
 
 ## 🛠️ Technologies Used
- - TBD
+
+### **Frontend**
+- ![React.js](https://img.shields.io/badge/React.js-61DAFB?logo=react&logoColor=white&style=flat-square)
+
+### **Backend**
+- ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white&style=flat-square)
+- ![Flask](https://img.shields.io/badge/Flask-000000?logo=flask&logoColor=white&style=flat-square)
+
+### **Database**
+- ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white&style=flat-square)
+
+### **Authentication & APIs**
+- ![Capital One's Nessie API](https://img.shields.io/badge/Nessie%20API-004B87?style=flat-square)
+- ![PropelAuth](https://img.shields.io/badge/PropelAuth-blue?style=flat-square)
+- ![Cerebras AI's LLaMa Model](https://img.shields.io/badge/Cerebras%20AI%20LLaMa-orange?style=flat-square)
+
+### **Blockchain**
+- ![Hedera](https://img.shields.io/badge/Hedera-2E2E2E?logo=hedera&logoColor=white&style=flat-square)
 
 ## **Features**
  - **User Authentication:** Secure sign-up and login using PropelAuth.
@@ -30,6 +48,3 @@ BlockWire is a cutting-edge platform designed to revolutionize international wir
  - [MongoDB](https://www.mongodb.com/)
  - [PennApps XXV](https://pennapps.com/)
  - [PropelAuth](https://propelauth.com/)
-
-
-
