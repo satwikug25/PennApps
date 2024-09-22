@@ -11,8 +11,8 @@ const Accounts = withAuthInfo((props) => {
   const [newAccountNickname, setNewAccountNickname] = useState('');
   const [newAccountType, setNewAccountType] = useState('');
   const [newAccountNumber, setNewAccountNumber] = useState('');
-  const [newAccountBalance, setNewAccountBalance] = useState(0);  // New state for balance
-  const [newAccountRewards, setNewAccountRewards] = useState(0);  // New state for rewards
+  const [newAccountBalance, setNewAccountBalance] = useState(null);  // New state for balance
+  const [newAccountRewards, setNewAccountRewards] = useState(null);  // New state for rewards
   const logoutFunction = useLogoutFunction();
   const { redirectToAccountPage } = useRedirectFunctions();
 
@@ -36,13 +36,14 @@ const Accounts = withAuthInfo((props) => {
   const handleAccountCreation = async () => {
     const customerId = localStorage.getItem('customerId');
     try {
-      const response = await axios.post(`http://127.0.0.1:5000/customers/${customerId}/accounts`, {
+      const response = await axios.post(`http://127.0.0.1:5000/create_account/${customerId}`, {
         type: newAccountType,
         nickname: newAccountNickname,
         rewards: parseInt(newAccountRewards), // Ensure integer value for rewards
         balance: parseInt(newAccountBalance), // Ensure integer value for balance
         account_number: newAccountNumber,
       });
+      console.log(response.data);
       alert('Account created successfully!');
       setAccounts([...accounts, response.data]);
       setShowAccountForm(false);
@@ -52,9 +53,9 @@ const Accounts = withAuthInfo((props) => {
     }
   };
 
-  const handleTransfer = async (accountId) => {
+  const handleTransfer = async (senderId) => {
     try {
-      const response = await axios.post(`/accounts/${accountId}/transfers`, {
+      const response = await axios.post(`http://127.0.0.1:5000/transfer_money/${senderId}`, {
         medium: 'balance',
         payee_id: recipientAccount,
         amount: transferAmount,
