@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, request
 import requests
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 NESSIE_BASE_URL = "http://api.nessieisreal.com"
 API_KEY = "09596467fbd10624fb1b890788dd3024"
