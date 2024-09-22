@@ -2,11 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import { AuthProvider } from "@propelauth/react";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+  <AuthProvider authUrl={"https://369213104.propelauthtest.com"}>
     <App />
+  </AuthProvider>
   </React.StrictMode>
 );
 
